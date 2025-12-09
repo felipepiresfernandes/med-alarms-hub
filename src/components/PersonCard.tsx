@@ -33,7 +33,7 @@ const PersonCard = ({ person, onAlarmToggle }: PersonCardProps) => {
         <img
           src={person.avatar}
           alt={person.name}
-          className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/20"
+          className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
         />
         <h2 className="font-semibold text-foreground">{person.name}</h2>
       </div>

@@ -4,7 +4,8 @@ import { cn } from "@/lib/utils";
 interface NavItem {
   id: string;
   label: string;
-  icon: React.ReactNode;
+  IconOutline: React.ComponentType<{ className?: string }>;
+  IconFilled: React.ComponentType<{ className?: string; fill?: string }>;
 }
 
 interface BottomNavProps {
@@ -14,37 +15,36 @@ interface BottomNavProps {
 
 const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   const navItems: NavItem[] = [
-    { id: "alarmes", label: "Alarmes", icon: <Clock className="w-5 h-5" /> },
-    { id: "registros", label: "Registros", icon: <FileText className="w-5 h-5" /> },
-    { id: "estoque", label: "Estoque", icon: <Package className="w-5 h-5" /> },
-    { id: "perfil", label: "Perfil", icon: <User className="w-5 h-5" /> },
+    { id: "alarmes", label: "Alarmes", IconOutline: Clock, IconFilled: Clock },
+    { id: "registros", label: "Registros", IconOutline: FileText, IconFilled: FileText },
+    { id: "estoque", label: "Estoque", IconOutline: Package, IconFilled: Package },
+    { id: "perfil", label: "Perfil", IconOutline: User, IconFilled: User },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 px-6 pb-4 z-20">
-      <nav className="bg-card rounded-3xl shadow-card border border-border">
-        <div className="flex items-center justify-around py-2 px-2">
+    <div className="fixed bottom-0 left-0 right-0 px-5 pb-4 z-20">
+      <nav className="bg-card/90 backdrop-blur-sm rounded-full shadow-navbar">
+        <div className="flex items-center justify-around">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
+            const Icon = item.IconOutline;
             return (
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
                 className={cn(
-                  "flex flex-col items-center gap-1 px-4 py-2 rounded-2xl transition-all duration-200",
+                  "flex flex-col items-center gap-1 px-5 py-3 transition-all duration-200 first:rounded-l-full last:rounded-r-full",
                   isActive
                     ? "bg-primary-light text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <div
+                <Icon 
                   className={cn(
-                    "transition-colors",
-                    isActive && "text-foreground"
+                    "w-6 h-6 transition-colors",
+                    isActive && "fill-foreground"
                   )}
-                >
-                  {item.icon}
-                </div>
+                />
                 <span className={cn("text-xs font-medium", isActive && "font-semibold")}>
                   {item.label}
                 </span>

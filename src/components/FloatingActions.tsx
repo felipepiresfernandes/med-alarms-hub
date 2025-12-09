@@ -101,9 +101,10 @@ const FloatingActions = ({ onAddAlarm, onAddMedication }: FloatingActionsProps) 
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          "w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-fab",
+          "w-14 h-14 rounded-full flex items-center justify-center shadow-fab",
           "hover:scale-105 active:scale-95 transition-all duration-200"
         )}
+        style={{ backgroundColor: '#46845E' }}
       >
         <div
           className={cn(
