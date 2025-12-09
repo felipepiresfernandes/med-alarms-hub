@@ -1,11 +1,10 @@
-import { Clock, FileText, Package, User } from "lucide-react";
+import { Clock, FileText, Package, User, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
   id: string;
   label: string;
-  IconOutline: React.ComponentType<{ className?: string }>;
-  IconFilled: React.ComponentType<{ className?: string; fill?: string }>;
+  Icon: LucideIcon;
 }
 
 interface BottomNavProps {
@@ -15,10 +14,10 @@ interface BottomNavProps {
 
 const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   const navItems: NavItem[] = [
-    { id: "alarmes", label: "Alarmes", IconOutline: Clock, IconFilled: Clock },
-    { id: "registros", label: "Registros", IconOutline: FileText, IconFilled: FileText },
-    { id: "estoque", label: "Estoque", IconOutline: Package, IconFilled: Package },
-    { id: "perfil", label: "Perfil", IconOutline: User, IconFilled: User },
+    { id: "alarmes", label: "Alarmes", Icon: Clock },
+    { id: "registros", label: "Registros", Icon: FileText },
+    { id: "estoque", label: "Estoque", Icon: Package },
+    { id: "perfil", label: "Perfil", Icon: User },
   ];
 
   return (
@@ -27,7 +26,6 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
         <div className="flex items-center justify-around">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
-            const Icon = item.IconOutline;
             return (
               <button
                 key={item.id}
@@ -39,11 +37,10 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <Icon 
-                  className={cn(
-                    "w-6 h-6 transition-colors",
-                    isActive && "fill-foreground"
-                  )}
+                <item.Icon 
+                  className="w-6 h-6 transition-colors"
+                  fill={isActive ? "currentColor" : "none"}
+                  strokeWidth={isActive ? 0 : 2}
                 />
                 <span className={cn("text-xs font-medium", isActive && "font-semibold")}>
                   {item.label}
