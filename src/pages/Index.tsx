@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import PersonCard from "@/components/PersonCard";
 import BottomNav from "@/components/BottomNav";
@@ -7,9 +8,12 @@ import StockView from "@/components/StockView";
 import { mockPeople } from "@/data/mockData";
 import { Person } from "@/types/alarm";
 import { toast } from "sonner";
+
 const Index = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("alarmes");
   const [people, setPeople] = useState<Person[]>(mockPeople);
+
   const handleAlarmToggle = (personId: string, alarmId: string) => {
     setPeople(prevPeople => prevPeople.map(person => {
       if (person.id === personId) {
@@ -33,15 +37,19 @@ const Index = () => {
       return person;
     }));
   };
+
   const handleAddAlarm = () => {
     toast("Adicionar alarme", {
       description: "Funcionalidade em desenvolvimento"
     });
   };
+
   const handleAddMedication = () => {
-    toast("Adicionar medicamento", {
-      description: "Funcionalidade em desenvolvimento"
-    });
+    navigate("/criar-produto?type=medicamento");
+  };
+
+  const handleAddSupplement = () => {
+    navigate("/criar-produto?type=suplemento");
   };
   return <div className="min-h-screen bg-background pb-24" style={{ backgroundColor: '#EEEEEE' }}>
       <Header />
@@ -65,7 +73,11 @@ const Index = () => {
       </main>
 
       {activeTab !== "estoque" && (
-        <FloatingActions onAddAlarm={handleAddAlarm} onAddMedication={handleAddMedication} />
+        <FloatingActions 
+          onAddAlarm={handleAddAlarm} 
+          onAddMedication={handleAddMedication} 
+          onAddSupplement={handleAddSupplement}
+        />
       )}
 
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />

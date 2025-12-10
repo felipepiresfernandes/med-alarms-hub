@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 interface FloatingActionsProps {
   onAddAlarm: () => void;
   onAddMedication: () => void;
+  onAddSupplement: () => void;
 }
 
 interface ActionItem {
@@ -15,7 +16,7 @@ interface ActionItem {
   isAI?: boolean;
 }
 
-const FloatingActions = ({ onAddAlarm, onAddMedication }: FloatingActionsProps) => {
+const FloatingActions = ({ onAddAlarm, onAddMedication, onAddSupplement }: FloatingActionsProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const actionItems: ActionItem[] = [
@@ -35,7 +36,7 @@ const FloatingActions = ({ onAddAlarm, onAddMedication }: FloatingActionsProps) 
       id: "supplement",
       label: "Adicionar Suplemento",
       icon: <Leaf className="w-4 h-4" />,
-      onClick: () => {},
+      onClick: onAddSupplement,
     },
     {
       id: "record",
