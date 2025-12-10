@@ -13,3 +13,4 @@ export interface StockProduct {
   status: ProductStatus;
 }
 
+

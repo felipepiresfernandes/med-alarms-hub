@@ -60,3 +60,4 @@ const StockProductCard = ({ product, onEdit }: StockProductCardProps) => {
 
 export default StockProductCard;
 
+

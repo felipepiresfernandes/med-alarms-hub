@@ -65,3 +65,4 @@ const StockFloatingActions = ({ onAddMedication, onAddSupplement }: StockFloatin
 
 export default StockFloatingActions;
 
+

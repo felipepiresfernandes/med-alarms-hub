@@ -37,3 +37,4 @@ const StockTabSelector = ({ activeTab, onTabChange }: StockTabSelectorProps) => 
 
 export default StockTabSelector;
 
+
