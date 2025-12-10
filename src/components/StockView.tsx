@@ -1,36 +1,32 @@
 import { useState, useMemo } from "react";
-import { StockProduct, ProductType } from "@/types/stock";
-import { mockStock } from "@/data/mockStock";
+import { useNavigate } from "react-router-dom";
+import { ProductType } from "@/types/stock";
+import { useProducts } from "@/contexts/ProductContext";
 import StockTabSelector from "./StockTabSelector";
 import StockProductCard from "./StockProductCard";
 import StockFloatingActions from "./StockFloatingActions";
 import { toast } from "sonner";
 
 const StockView = () => {
+  const navigate = useNavigate();
+  const { products } = useProducts();
   const [activeType, setActiveType] = useState<ProductType>("medicamento");
-  const [products] = useState<StockProduct[]>(mockStock);
 
   const handleEdit = (productId: string) => {
     toast("Editar produto", {
       description: `Editando produto ID: ${productId}`,
     });
-    // Aqui você pode navegar para a tela de edição
   };
 
   const handleAddMedication = () => {
-    toast("Adicionar medicamento", {
-      description: "Funcionalidade em desenvolvimento",
-    });
+    navigate("/criar-produto?type=medicamento");
   };
 
   const handleAddSupplement = () => {
-    toast("Adicionar suplemento", {
-      description: "Funcionalidade em desenvolvimento",
-    });
+    navigate("/criar-produto?type=suplemento");
   };
 
   const filteredProducts = useMemo(() => {
-    // Filtrar por tipo
     return products.filter((product) => product.type === activeType);
   }, [products, activeType]);
 
@@ -68,4 +64,3 @@ const StockView = () => {
 };
 
 export default StockView;
-
