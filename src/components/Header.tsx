@@ -3,7 +3,7 @@ import SuplimedLogo from "@/assets/SuplimedLogoVerde.svg";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-5 py-3 sticky top-0 z-10">
+    <header className="flex items-center justify-between px-5 py-3 sticky top-0 z-10" style={{ backgroundColor: '#EEEEEE' }}>
       <div className="flex items-center gap-1">
         <img src={SuplimedLogo} alt="SupliMed Logo" className="w-9 h-9" style={{ width: '36px', height: '36px' }} />
         <h1 className="text-xl font-semibold font-sans">

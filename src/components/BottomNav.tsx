@@ -52,7 +52,7 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
         <div className="relative flex items-center justify-between">
           {/* Retângulo animado de fundo */}
           <div
-            className="absolute h-[60px] rounded-full transition-all duration-300 ease-in-out"
+            className="absolute h-[64px] rounded-full transition-all duration-300 ease-in-out"
             style={{
               left: `${indicatorStyle.left}px`,
               width: `${indicatorStyle.width}px`,
@@ -71,14 +71,11 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
                 onClick={() => onTabChange(item.id)}
                 className={cn(
                   "relative flex flex-col items-center justify-center gap-1",
-                  "h-[60px] px-5 py-2",
+                  "h-[64px] flex-1 px-5 py-2",
                   "transition-all duration-200",
                   "text-muted-foreground hover:text-foreground",
                   isActive && "text-foreground"
                 )}
-                style={{
-                  minWidth: '60px',
-                }}
               >
                 <img 
                   src={isActive ? item.iconActive : item.iconInactive}

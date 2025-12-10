@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import PersonCard from "@/components/PersonCard";
 import BottomNav from "@/components/BottomNav";
 import FloatingActions from "@/components/FloatingActions";
+import StockView from "@/components/StockView";
 import { mockPeople } from "@/data/mockData";
 import { Person } from "@/types/alarm";
 import { toast } from "sonner";
@@ -56,18 +57,16 @@ const Index = () => {
             </p>
           </div>}
 
-        {activeTab === "estoque" && <div className="bg-card rounded-xl p-6 shadow-card text-center">
-            <p className="text-muted-foreground">
-              Gerenciamento de estoque em breve
-            </p>
-          </div>}
+        {activeTab === "estoque" && <StockView />}
 
         {activeTab === "perfil" && <div className="bg-card rounded-xl p-6 shadow-card text-center">
             <p className="text-muted-foreground">Perfil do usuário em breve</p>
           </div>}
       </main>
 
-      <FloatingActions onAddAlarm={handleAddAlarm} onAddMedication={handleAddMedication} />
+      {activeTab !== "estoque" && (
+        <FloatingActions onAddAlarm={handleAddAlarm} onAddMedication={handleAddMedication} />
+      )}
 
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>;
