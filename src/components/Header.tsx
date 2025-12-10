@@ -3,12 +3,12 @@ import SuplimedLogo from "@/assets/SuplimedLogoVerde.svg";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-4 py-3 sticky top-0 z-10">
-      <div className="flex items-center gap-2">
-        <img src={SuplimedLogo} alt="SupliMed Logo" className="w-10 h-10" />
+    <header className="flex items-center justify-between px-5 py-3 sticky top-0 z-10">
+      <div className="flex items-center gap-1">
+        <img src={SuplimedLogo} alt="SupliMed Logo" className="w-9 h-9" style={{ width: '36px', height: '36px' }} />
         <h1 className="text-xl font-semibold font-sans">
           <span className="text-foreground" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", fontWeight: 600 }}>Supli</span>
-          <span style={{ color: '#46845E' }}>Med</span>
+          <span style={{ color: '#46845E', fontWeight: 800 }}>Med</span>
         </h1>
       </div>
       <div className="flex items-center gap-2">

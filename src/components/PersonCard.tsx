@@ -27,13 +27,14 @@ const PersonCard = ({ person, onAlarmToggle }: PersonCardProps) => {
   };
 
   return (
-    <div className="bg-card rounded-xl p-4 shadow-card animate-fade-in">
+    <div className="bg-card rounded-xl p-4 shadow-card animate-fade-in" style={{ border: '1px solid #E0E0E0' }}>
       {/* Person Header */}
       <div className="flex items-center gap-3 mb-4">
         <img
           src={person.avatar}
           alt={person.name}
-          className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
+          className="rounded-full object-cover"
+          style={{ width: '28px', height: '28px' }}
         />
         <h2 className="font-semibold text-foreground">{person.name}</h2>
       </div>
