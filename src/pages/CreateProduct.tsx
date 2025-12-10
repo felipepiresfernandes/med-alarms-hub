@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft, Calendar, Palette } from "lucide-react";
+import { HexColorPicker } from "react-colorful";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,16 @@ import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { ProductType } from "@/types/stock";
 
+// Helper to convert hex to RGB
+const hexToRgb = (hex: string) => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : { r: 0, g: 0, b: 0 };
+};
+
 const CreateProduct = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -32,7 +43,7 @@ const CreateProduct = () => {
   const [unit, setUnit] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expiryDate, setExpiryDate] = useState<Date | undefined>();
-  const [productColor, setProductColor] = useState("");
+  const [productColor, setProductColor] = useState("#46845E");
 
   const handleCancel = () => {
     navigate(-1);
@@ -224,15 +235,72 @@ const CreateProduct = () => {
               {/* Cor do produto */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Cor do produto (opcional)</label>
-                <div className="flex items-center justify-between border-0 border-b border-border py-2">
-                  <Input
-                    value={productColor}
-                    onChange={(e) => setProductColor(e.target.value)}
-                    placeholder="Ex: Tarja de remédio"
-                    className="border-0 p-0 focus-visible:ring-0 bg-transparent flex-1"
-                  />
-                  <Palette className="w-5 h-5 text-muted-foreground" />
-                </div>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      className="w-full flex items-center justify-between border-0 border-b border-border py-2 text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="w-6 h-6 rounded-full border border-border"
+                          style={{ backgroundColor: productColor }}
+                        />
+                        <span className="text-sm text-foreground">{productColor.toUpperCase()}</span>
+                      </div>
+                      <Palette className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-4" align="start">
+                    <div className="space-y-4">
+                      <HexColorPicker 
+                        color={productColor} 
+                        onChange={setProductColor}
+                        className="!w-full"
+                      />
+                      
+                      {/* Hex and RGB inputs */}
+                      <div className="grid grid-cols-4 gap-2">
+                        <div className="space-y-1">
+                          <label className="text-xs text-muted-foreground">Hex</label>
+                          <Input
+                            value={productColor.toUpperCase()}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              if (/^#[0-9A-Fa-f]{0,6}$/.test(val)) {
+                                setProductColor(val);
+                              }
+                            }}
+                            className="text-xs h-8 px-2"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-muted-foreground">R</label>
+                          <Input
+                            value={hexToRgb(productColor).r}
+                            readOnly
+                            className="text-xs h-8 px-2 bg-muted"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-muted-foreground">G</label>
+                          <Input
+                            value={hexToRgb(productColor).g}
+                            readOnly
+                            className="text-xs h-8 px-2 bg-muted"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-muted-foreground">B</label>
+                          <Input
+                            value={hexToRgb(productColor).b}
+                            readOnly
+                            className="text-xs h-8 px-2 bg-muted"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
           </div>
