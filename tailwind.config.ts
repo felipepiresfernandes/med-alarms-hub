@@ -77,6 +77,7 @@ export default {
         'card-hover': '0 4px 20px -4px rgba(0, 0, 0, 0.12)',
         'fab': '0 4px 16px -2px rgba(0, 0, 0, 0.2)',
         'navbar': '0 4px 24px -4px rgba(0, 0, 0, 0.15)',
+        'inner-navbar': 'inset 0 1px 4px 0 rgba(0, 0, 0, 0.05)',
       },
       keyframes: {
         "accordion-down": {
