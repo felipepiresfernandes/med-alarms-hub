@@ -5,6 +5,7 @@ import PersonCard from "@/components/PersonCard";
 import BottomNav from "@/components/BottomNav";
 import FloatingActions from "@/components/FloatingActions";
 import StockView from "@/components/StockView";
+import RecordsView from "@/components/RecordsView";
 import { mockPeople } from "@/data/mockData";
 import { Person } from "@/types/alarm";
 import { toast } from "sonner";
@@ -74,13 +75,7 @@ const Index = () => {
           </>
         )}
 
-        {activeTab === "registros" && (
-          <div className="bg-card rounded-xl p-6 shadow-card text-center">
-            <p className="text-muted-foreground">
-              Histórico de registros em breve
-            </p>
-          </div>
-        )}
+        {activeTab === "registros" && <RecordsView />}
 
         {activeTab === "estoque" && <StockView />}
 
