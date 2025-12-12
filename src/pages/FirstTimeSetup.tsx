@@ -5,18 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
+import { useFirstTimeSetup } from "@/hooks/useFirstTimeSetup";
 
 const FirstTimeSetup = () => {
   const navigate = useNavigate();
+  const { completeSetup } = useFirstTimeSetup();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const formatPhone = (value: string) => {
-    // Remove tudo que não é número
     const numbers = value.replace(/\D/g, "");
-    // Aplica a máscara (99) 99999-9999
     if (numbers.length <= 10) {
       return numbers.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3").trim();
     } else {
@@ -29,7 +29,7 @@ const FirstTimeSetup = () => {
     setPhone(formatted);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name.trim()) {
@@ -37,7 +37,8 @@ const FirstTimeSetup = () => {
       return;
     }
 
-    // Por enquanto, apenas navega para a tela inicial
+    // Marca setup como completo e navega
+    completeSetup();
     toast.success("Perfil criado com sucesso!");
     navigate("/");
   };
