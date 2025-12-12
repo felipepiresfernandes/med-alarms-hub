@@ -95,48 +95,12 @@ export type Database = {
         }
         Relationships: []
       }
-      users: {
-        Row: {
-          id: string
-          name: string
-          phone: string | null
-          role: "admin" | "user"
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id: string
-          name: string
-          phone?: string | null
-          role?: "admin" | "user"
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          name?: string
-          phone?: string | null
-          role?: "admin" | "user"
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      has_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      sync_user_to_table: {
-        Args: {
-          user_id: string
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
       product_type: "medicamento" | "suplemento"
