@@ -17,4 +17,10 @@ export const supabase = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY
         autoRefreshToken: true,
       }
     })
-  : null as any; // Type assertion to avoid type errors when not configured
+  : (() => {
+      console.error("⚠️ Supabase não está configurado!");
+      console.error("Configure as variáveis de ambiente:");
+      console.error("  - VITE_SUPABASE_URL");
+      console.error("  - VITE_SUPABASE_PUBLISHABLE_KEY");
+      return null as any;
+    })();
