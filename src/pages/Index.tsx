@@ -6,6 +6,7 @@ import BottomNav from "@/components/BottomNav";
 import FloatingActions from "@/components/FloatingActions";
 import StockView from "@/components/StockView";
 import RecordsView from "@/components/RecordsView";
+import ProfileView from "@/components/ProfileView";
 import { mockPeople } from "@/data/mockData";
 import { Person } from "@/types/alarm";
 import { toast } from "sonner";
@@ -79,11 +80,7 @@ const Index = () => {
 
         {activeTab === "estoque" && <StockView />}
 
-        {activeTab === "perfil" && (
-          <div className="bg-card rounded-xl p-6 shadow-card text-center">
-            <p className="text-muted-foreground">Perfil do usuário em breve</p>
-          </div>
-        )}
+        {activeTab === "perfil" && <ProfileView />}
       </main>
 
       {activeTab !== "estoque" && (

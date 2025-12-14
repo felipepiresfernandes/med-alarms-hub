@@ -5,13 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
-import { useFirstTimeSetup } from "@/hooks/useFirstTimeSetup";
 import { supabase } from "@/integrations/supabase/client";
 
-const FirstTimeSetup = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const { completeSetup } = useFirstTimeSetup();
-  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -34,18 +31,13 @@ const FirstTimeSetup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name.trim()) {
-      toast.error("Nome é obrigatório");
-      return;
-    }
-
-    if (!password.trim() || password.length < 6) {
-      toast.error("Senha deve ter pelo menos 6 caracteres");
-      return;
-    }
-
     if (!phone.trim()) {
       toast.error("Telefone é obrigatório");
+      return;
+    }
+
+    if (!password.trim()) {
+      toast.error("Senha é obrigatória");
       return;
     }
 
@@ -63,47 +55,33 @@ const FirstTimeSetup = () => {
       const phoneNumbers = phone.replace(/\D/g, "");
       const email = `${phoneNumbers}@suplimed.local`;
 
-      // Cria o usuário no Supabase
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // Faz login no Supabase
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          data: {
-            name: name.trim(),
-            phone: phone.trim(),
-            role: 'admin' // Primeiro usuário é sempre admin
-          }
-        }
       });
 
       if (authError) {
-        console.error("Erro ao criar usuário:", authError);
-        toast.error(authError.message || "Erro ao criar conta. Tente novamente.");
+        console.error("Erro ao fazer login:", authError);
+        toast.error(authError.message || "Telefone ou senha incorretos. Tente novamente.");
         setIsLoading(false);
         return;
       }
 
       if (!authData.user) {
-        toast.error("Não foi possível criar o usuário. Tente novamente.");
+        toast.error("Não foi possível fazer login. Tente novamente.");
         setIsLoading(false);
         return;
       }
 
-      // Aguarda um pouco para garantir que o trigger do banco execute
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Marca setup como completo
-      completeSetup();
-      
-      toast.success("Perfil criado com sucesso!");
+      toast.success("Login realizado com sucesso!");
       
       // Redireciona para a página inicial
-      // Usa window.location para garantir que o estado seja recarregado
       window.location.href = "/";
 
     } catch (error) {
       console.error("Erro inesperado:", error);
-      toast.error("Erro inesperado ao criar conta. Tente novamente.");
+      toast.error("Erro inesperado ao fazer login. Tente novamente.");
       setIsLoading(false);
     }
   };
@@ -127,17 +105,13 @@ const FirstTimeSetup = () => {
             </div>
           </div>
           
-          {/* User icon with plus - overlapping monitor */}
+          {/* User icon - overlapping monitor */}
           <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-green-500 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
             <div className="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center relative">
               {/* Simple face representation */}
               <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-600 rounded-full"></div>
               <div className="absolute top-2 right-3 w-2 h-2 bg-gray-600 rounded-full"></div>
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1.5 bg-gray-600 rounded-full"></div>
-              {/* Plus icon */}
-              <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center absolute -bottom-1 -left-1 border-2 border-white">
-                <span className="text-white text-xs font-bold">+</span>
-              </div>
             </div>
           </div>
           
@@ -149,27 +123,12 @@ const FirstTimeSetup = () => {
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-black mb-8 text-center">
-        Vamos criar seu perfil!
+        Bem-vindo de volta!
       </h1>
 
       {/* Form Card */}
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <div className="bg-white rounded-xl p-6 shadow-card space-y-6">
-          {/* Name Field */}
-          <div className="space-y-2">
-            <Label htmlFor="name" className="text-base font-medium text-black">
-              Qual seu nome?
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Ex: Nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="border-gray-300 focus:border-green-500 focus:ring-green-500"
-            />
-          </div>
-
           {/* Phone Field */}
           <div className="space-y-2">
             <Label htmlFor="phone" className="text-base font-medium text-black">
@@ -221,11 +180,23 @@ const FirstTimeSetup = () => {
           disabled={isLoading}
           className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white text-base font-medium h-12 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? "Criando conta..." : "Avançar"}
+          {isLoading ? "Entrando..." : "Entrar"}
         </Button>
+
+        {/* Sign Up Link */}
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={() => navigate("/cadastro")}
+            className="text-green-600 hover:text-green-700 text-sm font-medium underline"
+          >
+            Não tem uma conta? Cadastre-se
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default FirstTimeSetup;
+export default Login;
+
